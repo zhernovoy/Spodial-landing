@@ -1,11 +1,439 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spodial - Ecommerce Solutions for Telegram</title>
+    <title>Spodial - Решения для электронной коммерции в Telegram</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        img[src*="images/"] {
+            min-height: 100px;
+            background: #f0f0f0;
+        }
+        
+        .clients-slider {
+            padding: 40px 0;
+        }
+        
+        .swiper {
+            width: 100%;
+            padding: 40px 20px;
+        }
+        
+        .client-slide {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .client-logo {
+            height: 60px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .client-logo img {
+            max-height: 100%;
+            width: auto;
+        }
+        
+        .client-quote {
+            font-style: italic;
+            margin: 20px 0;
+            color: #555;
+        }
+        
+        .client-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .client-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .swiper-pagination {
+            position: relative;
+            margin-top: 20px;
+        }
+        
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #333;
+        }
+        
+        .placeholder-box {
+            background: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+            min-height: 200px;
+            margin-bottom: 20px;
+        }
+
+        .placeholder-logo {
+            background: #f0f0f0;
+            border-radius: 4px;
+            height: 40px;
+            width: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .placeholder-avatar {
+            background: #f0f0f0;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 10px;
+        }
+
+        .features {
+            background: #f8f9fa;
+            padding: 80px 0;
+            overflow: hidden;
+        }
+
+        .features-slider {
+            position: relative;
+            width: 100%;
+            min-height: 500px;
+            margin-top: 60px;
+            overflow: hidden;
+        }
+
+        .feature-slide {
+            position: absolute;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .feature-slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .feature-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+        }
+
+        .feature-demo {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+        }
+
+        .feature-slide.active .feature-content,
+        .feature-slide.active .feature-demo {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-content h3 {
+            font-size: 32px;
+            margin-bottom: 24px;
+            color: #2d3748;
+        }
+
+        .feature-content p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #4a5568;
+            margin-bottom: 32px;
+        }
+
+        .feature-demo {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            padding: 30px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-nav {
+            display: flex;
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        .feature-nav-item {
+            padding: 16px 24px;
+            border-radius: 8px;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-nav-item.active {
+            border-color: #3182ce;
+            background: #ebf8ff;
+        }
+
+        .feature-nav-item:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .features-slider {
+                min-height: auto;
+            }
+            
+            .feature-slide {
+                position: relative;
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Add modern font */
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+        .integrations {
+            padding: 120px 0;
+            background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+        }
+
+        .integrations h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .integrations-subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto 60px;
+        }
+
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            align-items: center;
+        }
+
+        .integration-visual {
+            position: relative;
+        }
+
+        .integration-main {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .integration-decorative {
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            background: #3182ce;
+            border-radius: 20px;
+            top: 10%;
+            left: -5%;
+            z-index: 1;
+            opacity: 0.1;
+        }
+
+        .integration-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .integration-item {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .integration-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-color: #3182ce;
+        }
+
+        .integration-icon {
+            width: 48px;
+            height: 48px;
+            background: #ebf8ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            color: #3182ce;
+            font-size: 24px;
+        }
+
+        .integration-item h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #1a202c;
+        }
+
+        .integration-item p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .integrations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .integration-decorative {
+                display: none;
+            }
+        }
+
+        .partners {
+            padding: 120px 0;
+            background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+        }
+
+        .partners h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .partners-subtitle {
+            text-align: center;
+            font-size: 20px;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto 60px;
+        }
+
+        .partners-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .project-visual {
+            background: #f0f0f0;
+            border-radius: 12px;
+            height: 200px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 16px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .project-stats {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: auto;
+        }
+
+        .stat-highlight {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #3182ce;
+            margin-bottom: 8px;
+        }
+
+        .project-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: #1a202c;
+        }
+
+        .project-card p {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .partners-showcase {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .partners-showcase {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -15,11 +443,11 @@
                     <a href="/">Spodial</a>
                 </div>
                 <div class="nav-links">
-                    <a href="#features">Features</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="#contact">Contact</a>
-                    <a href="/login" class="btn-login">Login</a>
-                    <a href="/register" class="btn-primary">Get Started</a>
+                    <a href="#features">Возможности</a>
+                    <a href="#pricing">Цены</a>
+                    <a href="#contact">Контакты</a>
+                    <a href="/login" class="btn-login">Войти</a>
+                    <a href="/register" class="btn-primary">Начать</a>
                 </div>
             </div>
         </nav>
@@ -28,109 +456,291 @@
     <main>
         <section class="hero">
             <div class="container">
-                <h1>Transform Your Telegram Channel into a Powerful E-commerce Platform</h1>
-                <p class="hero-subtitle">Automate sales, manage orders, and grow your business with Spodial's complete e-commerce solution for Telegram</p>
-                <div class="cta-buttons">
-                    <a href="/register" class="btn-primary">Start Free Trial</a>
-                    <a href="#demo" class="btn-secondary">Watch Demo</a>
+                <div class="hero-content">
+                    <h1>Spodial — это комплексное решение для создания интернет-магазина в Telegram, отвечающее требованиям enterprise-бизнеса</h1>
+                    <p class="hero-subtitle">Mini Apps — это не каприз моды, а настоящая революция! Используйте приложения для взаимодействия с пользователями там, где они уже есть — в мессенджерах.</p>
+                    <div class="cta-buttons">
+                        <a href="/register" class="btn-primary">Оставить заявку</a>
+                        <a href="#demo" class="btn-secondary">Подробнее</a>
+                    </div>
                 </div>
                 <div class="hero-image">
-                    <img src="https://cdn.dribbble.com/userupload/7697317/file/original-ee6e5c4b7dd58e5b3c2bbe4b2ddd0250.png?compress=1&resize=1600x1200" alt="Spodial Dashboard">
-                </div>
-            </div>
-        </section>
-
-        <section id="features" class="features">
-            <div class="container">
-                <h2>Everything You Need to Sell on Telegram</h2>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🛍️</div>
-                        <h3>Automated Orders</h3>
-                        <p>Process orders automatically with our smart bot integration</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <h3>Analytics Dashboard</h3>
-                        <p>Track sales, revenue, and customer behavior in real-time</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">💳</div>
-                        <h3>Payment Integration</h3>
-                        <p>Accept payments through multiple payment systems</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📦</div>
-                        <h3>Inventory Management</h3>
-                        <p>Keep track of your stock and automate reordering</p>
-                    </div>
+                    <div class="placeholder-box">Интерфейс Spodial</div>
                 </div>
             </div>
         </section>
 
         <section class="stats">
             <div class="container">
-                <h2>Telegram Commerce is Growing Fast</h2>
+                <h2>Актуальность Telegram</h2>
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-number">800M+</div>
-                        <p>Monthly Active Users on Telegram</p>
+                        <div class="stat-number">№1</div>
+                        <p>Телеграм занимает первое место по проведенному времени в приложении</p>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">71%</div>
-                        <p>YoY Growth in Telegram Shopping</p>
+                        <div class="stat-number">50%+</div>
+                        <p>Больше половины населения РФ использует месседжер ежедневно</p>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">$5.2B</div>
-                        <p>Revenue via Telegram Shops in 2023</p>
+                        <div class="stat-number">№2</div>
+                        <p>Telegram - 2-я по объему рекламная площадка в рунете</p>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">3.2X</div>
-                        <p>Higher Conversion Rate vs Traditional E-commerce</p>
+                        <div class="stat-number">№4</div>
+                        <p>Место среди основных ресурсов рунета по дневной посещаемости</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="use-cases">
+        <section id="features" class="features">
             <div class="container">
-                <h2>Success Stories</h2>
-                <div class="use-cases-grid">
-                    <div class="use-case-card">
-                        <img src="https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=600&h=400&q=80" alt="Fashion Store Case">
-                        <h3>Fashion & Apparel</h3>
-                        <p>"We increased our sales by 300% after moving our catalog to Telegram with Spodial"</p>
-                        <div class="case-meta">
-                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson" onerror="this.src='https://ui-avatars.com/api/?name=Sarah+Johnson&background=random'">
-                            <div>
-                                <strong>Sarah Johnson</strong>
-                                <span>CEO, StyleHub</span>
+                <h2>Возможности для Ecom</h2>
+                
+                <div class="feature-nav">
+                    <div class="feature-nav-item active" data-index="0">
+                        Каталог
+                    </div>
+                    <div class="feature-nav-item" data-index="1">
+                        Интеграции
+                    </div>
+                    <div class="feature-nav-item" data-index="2">
+                        Управление
+                    </div>
+                    <div class="feature-nav-item" data-index="3">
+                        Аналитика
+                    </div>
+                </div>
+
+                <div class="features-slider">
+                    <div class="feature-slide active">
+                        <div class="feature-content">
+                            <h3>Каталог без ограничений</h3>
+                            <p>Удобное управление большими объёмами товаров и возможность работы с десятками тысяч SKU. Автоматическая синхронизация с вашим основным магазином.</p>
+                            <a href="#demo" class="btn-secondary">Подробнее</a>
+                        </div>
+                        <div class="feature-demo">
+                            <div class="placeholder-box">Демо каталога</div>
+                        </div>
+                    </div>
+
+                    <div class="feature-slide">
+                        <div class="feature-content">
+                            <h3>Продвинутые интеграции</h3>
+                            <p>Интеграция с основными системами интернет-магазина (CRM, call-центр, программа лояльности и доставка). Быстрое подключение и настройка.</p>
+                            <a href="#demo" class="btn-secondary">Подробнее</a>
+                        </div>
+                        <div class="feature-demo">
+                            <div class="placeholder-box">Схема интеграций</div>
+                        </div>
+                    </div>
+
+                    <div class="feature-slide">
+                        <div class="feature-content">
+                            <h3>Управление магазином</h3>
+                            <p>Полный контроль над заказами, клиентами и товарами. Автоматизация рутинных процессов и уведомлений.</p>
+                            <a href="#demo" class="btn-secondary">Подробнее</a>
+                        </div>
+                        <div class="feature-demo">
+                            <div class="placeholder-box">Панель управления</div>
+                        </div>
+                    </div>
+
+                    <div class="feature-slide">
+                        <div class="feature-content">
+                            <h3>Аналитика продаж</h3>
+                            <p>Детальная статистика по продажам, клиентам и товарам. Отчеты о конверсии и эффективности рекламных кампаний.</p>
+                            <a href="#demo" class="btn-secondary">Подробнее</a>
+                        </div>
+                        <div class="feature-demo">
+                            <div class="placeholder-box">Аналитическая панель</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="clients-slider">
+            <div class="container">
+                <h2>Наши клиенты</h2>
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <!-- Divan.ru -->
+                        <div class="swiper-slide">
+                            <div class="client-slide">
+                                <div class="client-logo">
+                                    <div class="placeholder-logo">Divan.ru</div>
+                                </div>
+                                <p class="client-quote">"Знакомство с командой spodial и создание магазина с ними это однозначно лучшее, что случалось со мной в 2023 году!"</p>
+                                <div class="client-author">
+                                    <div class="placeholder-avatar">AM</div>
+                                    <div>
+                                        <strong>Антон Макаров</strong>
+                                        <p>Основатель Divan.ru</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Wildberries -->
+                        <div class="swiper-slide">
+                            <div class="client-slide">
+                                <div class="client-logo">
+                                    <div class="placeholder-logo">Wildberries</div>
+                                </div>
+                                <p class="client-quote">"Spodial помог нам увеличить конверсию продаж через Telegram на 245% за первые три месяца."</p>
+                                <div class="client-author">
+                                    <div class="placeholder-avatar">EP</div>
+                                    <div>
+                                        <strong>Елена Петрова</strong>
+                                        <p>Директор по e-commerce, Wildberries</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Ozon -->
+                        <div class="swiper-slide">
+                            <div class="client-slide">
+                                <div class="client-logo">
+                                    <div class="placeholder-logo">Ozon</div>
+                                </div>
+                                <p class="client-quote">"Интеграция с существующими системами прошла быстро и безболезненно. Отличный сервис!"</p>
+                                <div class="client-author">
+                                    <div class="placeholder-avatar">DS</div>
+                                    <div>
+                                        <strong>Дмитрий Соколов</strong>
+                                        <p>CTO, Ozon</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- DNS -->
+                        <div class="swiper-slide">
+                            <div class="client-slide">
+                                <div class="client-logo">
+                                    <div class="placeholder-logo">DNS</div>
+                                </div>
+                                <p class="client-quote">"Автоматизация процессов через Spodial позволила нам обрабатывать заказы в 3 раза быстрее."</p>
+                                <div class="client-author">
+                                    <div class="placeholder-avatar">MI</div>
+                                    <div>
+                                        <strong>Мария Иванова</strong>
+                                        <p>Руководитель digital-направления, DNS</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Вкусвилл -->
+                        <div class="swiper-slide">
+                            <div class="client-slide">
+                                <div class="client-logo">
+                                    <div class="placeholder-logo">Вкусвилл</div>
+                                </div>
+                                <p class="client-quote">"Благодаря Spodial мы смогли создать уникальный опыт покупок в Telegram для наших клиентов."</p>
+                                <div class="client-author">
+                                    <div class="placeholder-avatar">AS</div>
+                                    <div>
+                                        <strong>Анна Смирнова</strong>
+                                        <p>Директор по инновациям, Вкусвилл</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="use-case-card">
-                        <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&q=80" alt="Electronics Store Case">
-                        <h3>Electronics</h3>
-                        <p>"Spodial's automation helped us handle 5x more orders without adding staff"</p>
-                        <div class="case-meta">
-                            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Mike Chen">
-                            <div>
-                                <strong>Mike Chen</strong>
-                                <span>Founder, TechDeals</span>
-                            </div>
+                    
+                    <!-- Add pagination -->
+                    <div class="swiper-pagination"></div>
+                    
+                    <!-- Add navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="integrations">
+            <div class="container">
+                <h2>Готовые интеграции</h2>
+                <p class="integrations-subtitle">Подключайте популярные сервисы и автоматизируйте бизнес-процессы в пару кликов</p>
+                
+                <div class="integrations-grid">
+                    <div class="integration-visual">
+                        <div class="integration-main">
+                            <div class="placeholder-box">Схема интеграций Spodial</div>
+                        </div>
+                        <div class="integration-decorative"></div>
+                    </div>
+                    
+                    <div class="integration-list">
+                        <div class="integration-item">
+                            <div class="integration-icon">💼</div>
+                            <h4>1C</h4>
+                            <p>Синхронизация товаров, заказов и складских остатков в реальном времени</p>
+                        </div>
+                        
+                        <div class="integration-item">
+                            <div class="integration-icon">📦</div>
+                            <h4>МойСклад</h4>
+                            <p>Автоматическое обновление наличия и цен из вашей системы учета</p>
+                        </div>
+                        
+                        <div class="integration-item">
+                            <div class="integration-icon">🎯</div>
+                            <h4>AmoCRM</h4>
+                            <p>Управление воронкой продаж и коммуникация с клиентами</p>
+                        </div>
+                        
+                        <div class="integration-item">
+                            <div class="integration-icon">🔄</div>
+                            <h4>Битрикс24</h4>
+                            <p>Единая система для управления заказами и клиентской базой</p>
                         </div>
                     </div>
-                    <div class="use-case-card">
-                        <img src="https://images.unsplash.com/photo-1526367790999-0150786686a2?w=600&h=400&q=80" alt="Food Delivery Case">
-                        <h3>Food Delivery</h3>
-                        <p>"Our customers love the seamless ordering experience through Telegram"</p>
-                        <div class="case-meta">
-                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Ana Silva">
-                            <div>
-                                <strong>Ana Silva</strong>
-                                <span>Owner, Fresh Bites</span>
-                            </div>
-                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="pricing">
+            <div class="container">
+                <h2>Простые и прозрачные цены</h2>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3>Старт</h3>
+                        <div class="price">2900₽<span>/месяц</span></div>
+                        <ul>
+                            <li>До 100 заказов/месяц</li>
+                            <li>Базовая аналитика</li>
+                            <li>1 Telegram канал</li>
+                            <li>Поддержка по email</li>
+                        </ul>
+                        <a href="/register" class="btn-primary">Начать</a>
+                    </div>
+                    <div class="pricing-card popular">
+                        <div class="popular-badge">Популярный</div>
+                        <h3>Профессиональный</h3>
+                        <div class="price">7900₽<span>/месяц</span></div>
+                        <ul>
+                            <li>Безлимитные заказы</li>
+                            <li>Расширенная аналитика</li>
+                            <li>До 5 Telegram каналов</li>
+                            <li>Приоритетная поддержка</li>
+                        </ul>
+                        <a href="/register" class="btn-primary">Начать</a>
+                    </div>
+                    <div class="pricing-card">
+                        <h3>Корпоративный</h3>
+                        <div class="price">Индивидуально</div>
+                        <ul>
+                            <li>Любой объём заказов</li>
+                            <li>Индивидуальная аналитика</li>
+                            <li>Неограниченное количество каналов</li>
+                            <li>Поддержка 24/7</li>
+                        </ul>
+                        <a href="/contact" class="btn-secondary">Связаться с нами</a>
                     </div>
                 </div>
             </div>
@@ -138,51 +748,57 @@
 
         <section class="partners">
             <div class="container">
-                <h2>Trusted by Leading Brands</h2>
-                <div class="partners-grid">
-                    <div class="partner-card">
-                        <img src="https://randomuser.me/api/portraits/men/92.jpg" alt="Partner 1">
-                        <blockquote>"Spodial has revolutionized how we handle our Telegram commerce"</blockquote>
-                        <div class="partner-info">
-                            <strong>David Miller</strong>
-                            <span>Digital Director, BrandX</span>
+                <h2>О нас</h2>
+                <p class="partners-subtitle">Мы создаем инновационные цифровые решения для бизнеса и государственных проектов</p>
+                
+                <div class="partners-showcase">
+                    <div class="project-card">
+                        <div class="project-visual">
+                            Интерактивная карта<br>парковочных пространств
+                        </div>
+                        <h3>Парковки России</h3>
+                        <p>Разработка и внедрение решений и систем цифровизации парковочных пространств городов под ключ</p>
+                        <div class="project-stats">
+                            <div class="stat-highlight">21 город</div>
+                            <p>540 000+ парковочных мест под управлением</p>
                         </div>
                     </div>
-                    <div class="partner-card">
-                        <img src="https://randomuser.me/api/portraits/women/23.jpg" alt="Partner 2">
-                        <blockquote>"The best solution for Telegram-based business we've found"</blockquote>
-                        <div class="partner-info">
-                            <strong>Emma Watson</strong>
-                            <span>E-commerce Lead, CompanyY</span>
+
+                    <div class="project-card">
+                        <div class="project-visual">
+                            Платформа управления<br>культурными мероприятиями
+                        </div>
+                        <h3>PROКультура.рф</h3>
+                        <p>Цифровая платформа для продвижения услуг и мероприятий в сфере культуры</p>
+                        <div class="project-stats">
+                            <div class="stat-highlight">3 000 000+</div>
+                            <p>Событий проходит через платформу ежегодно</p>
                         </div>
                     </div>
-                    <div class="partner-card">
-                        <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Partner 3">
-                        <blockquote>"Increased our revenue by 200% in just 3 months"</blockquote>
-                        <div class="partner-info">
-                            <strong>James Cooper</strong>
-                            <span>CEO, StartupZ</span>
+
+                    <div class="project-card">
+                        <div class="project-visual">
+                            Система учета и контроля<br>посещений мероприятий
+                        </div>
+                        <h3>Пушкинская карта</h3>
+                        <p>Программа популяризации культурных мероприятий среди молодежи</p>
+                        <div class="project-stats">
+                            <div class="stat-highlight">10 000+</div>
+                            <p>Учреждений культуры используют систему</p>
                         </div>
                     </div>
-                </div>
-                <div class="partner-logos">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Zara_Logo.svg" alt="Partner Logo 1">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" alt="Partner Logo 2">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Nike_Logo.svg" alt="Partner Logo 3">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Partner Logo 4">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Puma_Logo.svg" alt="Partner Logo 5">
                 </div>
             </div>
         </section>
 
         <section class="feedback-form">
             <div class="container">
-                <h2>Get in Touch</h2>
-                <p>Have questions? We'd love to hear from you.</p>
+                <h2>Свяжитесь с нами</h2>
+                <p>Есть вопросы? Мы будем рады помочь.</p>
                 <form id="contactForm" class="contact-form">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name">Имя</label>
                             <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
@@ -190,68 +806,26 @@
                             <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group full-width">
-                            <label for="company">Company</label>
+                            <label for="company">Компания</label>
                             <input type="text" id="company" name="company">
                         </div>
                         <div class="form-group full-width">
-                            <label for="message">Message</label>
+                            <label for="message">Сообщение</label>
                             <textarea id="message" name="message" required></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="btn-primary">Send Message</button>
+                    <button type="submit" class="btn-primary">Отправить сообщение</button>
                 </form>
-            </div>
-        </section>
-
-        <section id="pricing" class="pricing">
-            <div class="container">
-                <h2>Simple, Transparent Pricing</h2>
-                <div class="pricing-grid">
-                    <div class="pricing-card">
-                        <h3>Starter</h3>
-                        <div class="price">$29<span>/month</span></div>
-                        <ul>
-                            <li>Up to 100 orders/month</li>
-                            <li>Basic analytics</li>
-                            <li>1 Telegram channel</li>
-                            <li>Email support</li>
-                        </ul>
-                        <a href="/register" class="btn-primary">Get Started</a>
-                    </div>
-                    <div class="pricing-card popular">
-                        <div class="popular-badge">Most Popular</div>
-                        <h3>Professional</h3>
-                        <div class="price">$79<span>/month</span></div>
-                        <ul>
-                            <li>Unlimited orders</li>
-                            <li>Advanced analytics</li>
-                            <li>Up to 5 Telegram channels</li>
-                            <li>Priority support</li>
-                        </ul>
-                        <a href="/register" class="btn-primary">Get Started</a>
-                    </div>
-                    <div class="pricing-card">
-                        <h3>Enterprise</h3>
-                        <div class="price">Custom</div>
-                        <ul>
-                            <li>Custom order volume</li>
-                            <li>Custom analytics</li>
-                            <li>Unlimited channels</li>
-                            <li>24/7 support</li>
-                        </ul>
-                        <a href="/contact" class="btn-secondary">Contact Us</a>
-                    </div>
-                </div>
             </div>
         </section>
 
         <section id="contact" class="contact">
             <div class="container">
-                <h2>Ready to Get Started?</h2>
-                <p>Join thousands of businesses already using Spodial</p>
+                <h2>Готовы начать?</h2>
+                <p>Присоединяйтесь к тысячам компаний, которые уже используют Spodial</p>
                 <div class="contact-buttons">
-                    <a href="/register" class="btn-primary">Start Free Trial</a>
-                    <a href="/demo" class="btn-secondary">Schedule Demo</a>
+                    <a href="/register" class="btn-primary">Начать бесплатный период</a>
+                    <a href="/demo" class="btn-secondary">Запланировать демо</a>
                 </div>
             </div>
         </section>
@@ -262,32 +836,32 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <h4>Spodial</h4>
-                    <p>Your complete e-commerce solution for Telegram</p>
+                    <p>Ваше комплексное решение для электронной коммерции в Telegram</p>
                 </div>
                 <div class="footer-col">
-                    <h4>Product</h4>
-                    <a href="#features">Features</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="/docs">Documentation</a>
+                    <h4>Продукт</h4>
+                    <a href="#features">Возможности</a>
+                    <a href="#pricing">Цены</a>
+                    <a href="/docs">Документация</a>
                 </div>
                 <div class="footer-col">
-                    <h4>Company</h4>
-                    <a href="/about">About</a>
-                    <a href="/blog">Blog</a>
-                    <a href="/careers">Careers</a>
+                    <h4>Компания</h4>
+                    <a href="/about">О нас</a>
+                    <a href="/blog">Блог</a>
+                    <a href="/careers">Вакансии</a>
                 </div>
                 <div class="footer-col">
-                    <h4>Support</h4>
-                    <a href="/help">Help Center</a>
-                    <a href="/contact">Contact</a>
-                    <a href="/status">Status</a>
+                    <h4>Поддержка</h4>
+                    <a href="/help">Центр помощи</a>
+                    <a href="/contact">Контакты</a>
+                    <a href="/status">Статус</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Spodial. All rights reserved.</p>
+                <p>&copy; 2024 Spodial. Все права защищены.</p>
                 <div class="footer-links">
-                    <a href="/privacy">Privacy Policy</a>
-                    <a href="/terms">Terms of Service</a>
+                    <a href="/privacy">Политика конфиденциальности</a>
+                    <a href="/terms">Условия использования</a>
                 </div>
             </div>
         </div>
@@ -298,21 +872,119 @@
         // Handle image loading errors
         document.querySelectorAll('img').forEach(img => {
             img.onerror = function() {
-                // For profile images
-                if (this.alt.includes('Partner') || this.alt.includes('Sarah') || 
-                    this.alt.includes('Mike') || this.alt.includes('Ana')) {
-                    this.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(this.alt)}&background=random`;
-                }
-                // For partner logos
-                else if (this.alt.includes('Logo')) {
-                    this.src = 'https://via.placeholder.com/160x80?text=Partner';
-                }
-                // For other images
-                else {
-                    this.src = 'https://via.placeholder.com/600x400?text=Image+Not+Found';
-                }
+                console.error('Failed to load image:', this.src);
+                this.src = `https://placehold.co/600x400?text=${encodeURIComponent(this.alt)}`;
             };
+            
+            // Add load event listener
+            img.onload = function() {
+                console.log('Image loaded successfully:', this.src);
+            };
+            
+            // Force reload of images
+            const currentSrc = img.src;
+            img.src = '';
+            img.src = currentSrc;
         });
+    });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                }
+            }
+        });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const navItems = document.querySelectorAll('.feature-nav-item');
+        const slides = document.querySelectorAll('.feature-slide');
+        let currentSlide = 0;
+        let slideInterval;
+
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+                // Reset position for next animation
+                setTimeout(() => {
+                    if (!slide.classList.contains('active')) {
+                        slide.style.visibility = 'hidden';
+                    }
+                }, 600); // Match transition duration
+            });
+            
+            // Remove active class from all nav items
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected slide
+            slides[index].style.visibility = 'visible';
+            // Small delay to ensure visibility before animation
+            setTimeout(() => {
+                slides[index].classList.add('active');
+            }, 50);
+            
+            navItems[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            let next = currentSlide + 1;
+            if (next >= slides.length) next = 0;
+            showSlide(next);
+        }
+
+        function startSlideshow() {
+            if (slideInterval) clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        // Add click handlers to nav items
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const index = parseInt(item.dataset.index);
+                showSlide(index);
+                startSlideshow();
+            });
+        });
+
+        // Show first slide initially
+        showSlide(0);
+
+        // Start the slideshow
+        startSlideshow();
+
+        // Pause on hover
+        const featuresSection = document.querySelector('.features');
+        featuresSection.addEventListener('mouseenter', () => {
+            if (slideInterval) clearInterval(slideInterval);
+        });
+        featuresSection.addEventListener('mouseleave', startSlideshow);
     });
     </script>
 </body>
