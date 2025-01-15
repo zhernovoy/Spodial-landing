@@ -479,6 +479,85 @@
                 gap: 20px;
             }
         }
+
+        .hero {
+            padding: 120px 0 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 56px;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            line-height: 1.6;
+            color: #4a5568;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0 0;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 12px;
+            color: #4a5568;
+            font-size: 16px;
+        }
+
+        .feature-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #3182ce;
+            font-weight: bold;
+        }
+
+        .feature-content {
+            padding-right: 40px;
+        }
+
+        .feature-content h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 16px;
+        }
+
+        .feature-content p {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -503,11 +582,11 @@
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <h1>Запустите продажи в Telegram за 10 минут с помощью Spodial</h1>
-                    <p class="hero-subtitle">Готовое enterprise-решение для быстрого старта в Telegram. Автоматизация заказов, мгновенная интеграция с вашими системами и полная аналитика для роста продаж.</p>
+                    <h1>Spodial — enterprise-решение<br>для организации продаж в Telegram</h1>
+                    <p class="hero-subtitle">Mini Apps — это не каприз моды, а настоящая революция! Используйте приложения для взаимодействия с пользователями там, где они уже есть — в мессенджерах.</p>
                     <div class="cta-buttons">
-                        <a href="/register" class="btn-primary">Попробовать бесплатно</a>
-                        <a href="#demo" class="btn-secondary">Посмотреть демо</a>
+                        <a href="/register" class="btn-primary">Оставить заявку</a>
+                        <a href="#demo" class="btn-secondary">Подробнее</a>
                     </div>
                 </div>
                 <div class="hero-image">
@@ -530,9 +609,9 @@
                         </div>
                         <div class="quote-content">
                             <blockquote>
-                                "Telegram становится главной платформой для электронной коммерции в России"
+                                "Mini Apps — это не просто новый тренд, а будущее мобильного интернета. Они позволяют пользователям получать доступ к полноценным сервисам прямо в мессенджере, без необходимости устанавливать отдельные приложения"
                             </blockquote>
-                            <cite>2024 год</cite>
+                            <cite>Из выступления на VK Play Live</cite>
                         </div>
                     </div>
                 </div>
@@ -570,19 +649,24 @@
                         Интеграции
                     </div>
                     <div class="feature-nav-item" data-index="2">
-                        Управление
+                        Интерфейс
                     </div>
                     <div class="feature-nav-item" data-index="3">
-                        Аналитика
+                        Безопасность
                     </div>
                 </div>
 
                 <div class="features-slider">
                     <div class="feature-slide active">
                         <div class="feature-content">
-                            <h3>Каталог на миллионы товаров</h3>
-                            <p>Загружайте неограниченное количество товаров, настраивайте категории и фильтры. Автоматическая синхронизация цен и остатков с вашим основным магазином каждые 5 минут.</p>
-                            <a href="#demo" class="btn-secondary">Посмотреть демо</a>
+                            <h3>Каталог без ограничений</h3>
+                            <p>Удобное управление большими объёмами товаров и возможность работы с десятками тысяч SKU. Гибкая настройка категорий и фильтров.</p>
+                            <ul class="feature-list">
+                                <li>Удобные настраиваемые баннеры</li>
+                                <li>Большие карточки категорий</li>
+                                <li>Удобный поиск и сортировка</li>
+                                <li>Акции и скидки на товарах</li>
+                            </ul>
                         </div>
                         <div class="feature-demo">
                             <div class="placeholder-box">Демо каталога</div>
@@ -591,9 +675,14 @@
 
                     <div class="feature-slide">
                         <div class="feature-content">
-                            <h3>Мгновенная интеграция</h3>
-                            <p>Подключение к вашим системам за 1 день. Готовые интеграции с 1С, SAP, Битрикс24 и другими популярными системами. Автоматический обмен данными в реальном времени.</p>
-                            <a href="#demo" class="btn-secondary">Посмотреть демо</a>
+                            <h3>Продвинутые интеграции</h3>
+                            <p>Интеграция с основными системами интернет-магазина: CRM, call-центр, программа лояльности и доставка.</p>
+                            <ul class="feature-list">
+                                <li>Cloudpayments, ЮКасса, Robokassa</li>
+                                <li>Интеграция с вашими платежными системами</li>
+                                <li>Автоматическая синхронизация данных</li>
+                                <li>Единая система управления</li>
+                            </ul>
                         </div>
                         <div class="feature-demo">
                             <div class="placeholder-box">Схема интеграций</div>
@@ -602,23 +691,33 @@
 
                     <div class="feature-slide">
                         <div class="feature-content">
-                            <h3>Автоматизация продаж</h3>
-                            <p>Сократите время обработки заказа с 15 минут до 30 секунд. Автоматическое создание заказов, уведомления клиентов и интеграция со службами доставки.</p>
-                            <a href="#demo" class="btn-secondary">Посмотреть демо</a>
+                            <h3>Интерфейс магазина</h3>
+                            <p>Управление каталогами, оформление заказов, обработка платежей и доставка — всё в одном месте.</p>
+                            <ul class="feature-list">
+                                <li>Личный кабинет покупателя</li>
+                                <li>История заказов со статусами</li>
+                                <li>Встроенный генератор промокодов</li>
+                                <li>Уведомления о брошенной корзине</li>
+                            </ul>
                         </div>
                         <div class="feature-demo">
-                            <div class="placeholder-box">Панель управления</div>
+                            <div class="placeholder-box">Интерфейс магазина</div>
                         </div>
                     </div>
 
                     <div class="feature-slide">
                         <div class="feature-content">
-                            <h3>Аналитика для роста продаж</h3>
-                            <p>Увеличивайте конверсию на основе данных. Отслеживайте поведение клиентов, анализируйте воронку продаж и автоматически выявляйте точки роста.</p>
-                            <a href="#demo" class="btn-secondary">Посмотреть демо</a>
+                            <h3>Высокая производительность</h3>
+                            <p>Система отвечает всем требованиям нагрузки и безопасности для крупного интернет-магазина.</p>
+                            <ul class="feature-list">
+                                <li>Быстрая загрузка каталога</li>
+                                <li>Защита персональных данных</li>
+                                <li>Безопасные платежи</li>
+                                <li>Стабильная работа 24/7</li>
+                            </ul>
                         </div>
                         <div class="feature-demo">
-                            <div class="placeholder-box">Аналитическая панель</div>
+                            <div class="placeholder-box">Система безопасности</div>
                         </div>
                     </div>
                 </div>
